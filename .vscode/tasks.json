@@ -1,0 +1,97 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558 
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+
+    "runner": "terminal",
+    "type": "shell",
+    "echoCommand": true,
+    "presentation": {"reveal": "always"},
+
+    "tasks": [
+        //c++ COMPILE
+        {
+            //"type": "shell",
+            //"label": "gcc.exe build active file",
+            "label": "save and compile for C++",
+            //"command": "C:\\MinGW\\bin\\gcc.exe",
+            "command": "g++",
+            /*"args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ]*/
+            "args":[
+                "${file}",
+                "-g",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            /*
+            "options": {
+                "cwd": "C:\\MinGW\\bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }*/
+            "group" : "build",
+
+            "problemMatcher":{
+                "fileLocation":[
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        //C COMPILE
+        {
+            "label": "save and compile for C",
+            "command": "gcc",
+            "args": [
+                "${file}",
+                "-g",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "group": "build",
+
+            "problemMatcher":{
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern":{
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                   
+                }
+            }
+        },
+        // Binary run
+        {
+            "label": "execute",
+            "command":"cmd",
+            "group": "test",
+            "args": [
+                "/C", "${fileDirname}\\${fileBasenameNoExtension}"
+            ]
+        }
+    ]
+}
